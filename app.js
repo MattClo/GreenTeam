@@ -1,31 +1,45 @@
 const express=require('express');
+const router = express.Router();
 const app = express();
 const port = 5000;
+app.use("/",router);
+app.set('view engine', 'ejs');
+
 
 // IF not logged in go to login
-app.get('/',(req,res)=>{
+router.get('/',(req,res)=>{
     res.redirect('/login')
 });
 
-app.get('/login',(req,res)=>{
-    res.sendFile('login.html',{root: __dirname});
+router.get('/login',(req,res)=>{
+    res.render('login');
 });
-app.post('/login',(req,res)=>{
-    res.sendFile('login.html',{root: __dirname});
+router.post('/login',(req,res)=>{
+    console.log("did this");
+    res.render('login');
 });
 
-app.get('/home',(req,res)=>{
-    res.sendFile('home.html',{root: __dirname});
+router.get('/home',(req,res)=>{
+    res.render('home');
 });
-app.post('/home',(req,res)=>{
-    res.sendFile('home.html',{root: __dirname});
-});
+router.post('/home',(req,res)=>{
+    console.log("WOWWO");
+    res.redirect('/home');
+})
+
+router.post('/home',(req,res)=>{
+    console.log("WOWWO");
+    res.redirect('/home');
+})
+
+
+
 
 app.get('/profile',(req,res)=>{
-    res.sendFile('profile.html',{root: __dirname});
+    res.render('profile');
 });
 app.post('/profile',(req,res)=>{
-    res.sendFile('profile.html',{root: __dirname});
+    res.render('profile.html');
 });
 
 
