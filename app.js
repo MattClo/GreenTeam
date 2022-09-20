@@ -7,7 +7,7 @@ const port = 5000;
 app.set('view engine', 'ejs');
 app.use('/dist/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/dist/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
-app.use(express.static(__dirname+'/css'))
+app.use('/css', express.static(__dirname+'/css'))
 
 const routes = fs.readdirSync('./routes').filter(file => file.endsWith('.js'));
 routes.forEach(route =>{
