@@ -13,10 +13,10 @@
         </div>
 
 
-        <h1>Welcome</h1>
+        <h1>Welcome <%if(user){%><%=user%><%}%></h1>
       
         <% people.forEach(function(person){ %>
-            <h2>Name: <%=person.forename%> <br>Location: <%=person.location%></h2><br><br>
+            <p>Name: <%=person.forename%> <br>Location: <%=person.location%></p><br>
         <% }); %>
         
 
