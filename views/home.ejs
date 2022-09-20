@@ -14,7 +14,12 @@
 
 
         <h1>Welcome</h1>
+      
+        <% people.forEach(function(person){ %>
+            <h2>Name: <%=person.forename%> <br>Location: <%=person.location%></h2><br><br>
+        <% }); %>
         
+
         <div name="Profile">
             <form action="/profile" method="post">
                 <button name="Profile">Profile</button>

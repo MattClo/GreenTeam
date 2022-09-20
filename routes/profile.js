@@ -4,6 +4,7 @@ module.exports = async (app) =>{
     // IF not logged in go to login
     app.get('/profile', async (req,res)=>{
 
+        
         //if(app.user === undefined){
 
             //return res.redirect("/login")
