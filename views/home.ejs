@@ -95,15 +95,29 @@
   </div>
 </nav>
 
+
+
+
+
 <main class="container" >
   <div class="bg-light p-5 rounded">
+    <h1 id="hello">Welcome, <%if(user){%><%=user%><%}%></h1>
+    <p class="lead">Other people's profiles</p>
     <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar" onchange="test()">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    <h1>New Starters 2022</h1>
-    <p class="lead">Other people's profile</p>
-    <a class="btn btn-lg btn-primary" href="/docs/5.2/components/navbar/" role="button">View navbar docs &raquo;</a>
+    </form>
+    <br>
+
+
+    <% people.forEach(function(person){ %>
+        <div style="background-color:white;height:auto">  <span id="name"><%=person.forename%></span>   <span><%=person.location%></span><input type="submit" value="View Profile" style="float:right; height:auto;margin-top:auto"> </div>
+        <div><br></div>
+    <% }); %>
+
+
+
+
   </div>
 </main>
 
@@ -113,3 +127,18 @@
       
   </body>
 </html>
+<script>
+    function test(){
+        
+        document.getElementsByName("name").forEach(test=>{
+            test.innerHTML="awawa";
+        }
+
+        )
+        document.getElementById("hello").innerHTML="you typed"+document.getElementById("searchbar").value;
+
+
+    }
+
+    </script>
+
