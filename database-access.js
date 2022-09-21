@@ -26,9 +26,10 @@ function createTables() {
         interest TEXT,
         FOREIGN KEY (username)
         REFERENCES users (username);
-
-    )
+    );
     `;
+
+    db.exec(tables_sql)
 }
 
 function createDBConnection() {
