@@ -1,27 +1,21 @@
-
-
 module.exports = async (app) =>{
     // IF not logged in go to login
-    app.get('/profile', async (req,res)=>{
-
-        //if(app.user === undefined){
-
-            //return res.redirect("/login")
-        //}
-
-        //let profile = await mysql.get("command").then(response ={
-
-            //zcode();
-        //})
-
-
-        //res.render('profile', {profile: profile});
-
-        res.render('profile');
-
+    app.get('/profile', (req,res)=>{
+        if (req.session.user==null){
+            console.log("WHAT");
+            res.redirect('/login');
+        }
+        else{
+            res.render('profile');
+        }
     });
 
     app.post('/profile',(req,res)=>{
-        res.redirect('/profile');
+        if (req.session.user==null){
+            res.redirect('/login');
+        }
+        else{
+            res.render('profile');
+        }
     })
 }
