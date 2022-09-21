@@ -78,7 +78,7 @@
     float: left;
     padding: 35px;
     border: 1px solid red;
-    fill: #ffffff
+    fill: #ffffff;
     border-radius: 5px;
 }  
 .float-child-right {
