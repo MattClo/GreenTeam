@@ -6,7 +6,7 @@ module.exports = async (app) =>{
             res.redirect('/login');
         }
         else{
-            res.render('profile');
+            res.render('profile',{username:req.session.user});
         }
     });
 
@@ -15,7 +15,7 @@ module.exports = async (app) =>{
             res.redirect('/login');
         }
         else{
-            res.render('profile');
+            res.render('profile',{username:req.body.username});
         }
     })
 }

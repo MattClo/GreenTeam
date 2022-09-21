@@ -8,24 +8,7 @@
     <meta name="generator" content="Hugo 0.101.0">
     <title>Home page</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/navbar-static/">
-
-    
-
-    
-
 <link href="/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
-    <!-- Favicons -->
-<link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
-<link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
-<meta name="theme-color" content="#712cf9">
-
-
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -132,21 +115,27 @@
     <div class="collapse navbar-collapse" id="navbarCollapse" >
       <ul class="navbar-nav ms-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home  | </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/profile">Profile  |</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/login">Logout</a>
-        </li>
+            <a class="nav-link active" aria-current="page" href="#">Home </a>
+          </li>
+          <li class="nav-item">
+             <a class="nav-link" aria-current="page" href="#">| </a>
+          </li>
+          <form action="/profile" method="post">
+            <input type="hidden" name="username" value="<%=user%>">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" onclick="this.parentNode.parentNode.submit()" href="#">Profile </a>
+            </li>
+          </form>
+          <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">| </a>
+           </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/login">Logout</a>
+          </li>
       </ul>
     </div>
   </div>
 </nav>
-
-
-
 
 
 <main class="container" >
@@ -162,18 +151,16 @@
 
     <% people.forEach(function(person){ %>
       <div name = "big div">
-        <div style="background-color:white;height:auto" name="descriptor">  
-          <span id="name"><%=person.forename%></span>   
+        <form method="post" action="/profile" style="background-color:white;height:auto" name="descriptor">  
+          <input name="username" value="<%=person.username%>">
+          <span><%=person.forename%></span>   
           <span><%=person.location%></span>
-          <input type="submit" value="View Profile" class="rounded" style="border:1px; color:white; background-color:rgb(29, 127, 255);float:right; height:auto;margin-top:auto" onclick="viewPerson('<%=person.forename%>','<%=person.surname%>','<%=person.age%>','<%=person.location%>','<%=person.interests%>');"> 
-        </div>
+          <input type="submit" value="View" class="rounded" style="border:1px; color:white; background-color:rgb(29, 127, 255);float:right; height:auto;margin-top:auto"> 
+        </form>
         <div><br></div>
       </div>
     <% }); %>
   </div>
-
-
-
 
 
   <div id="myModal" class="modal">
@@ -189,14 +176,6 @@
     </div>
   
   </div>
-
-
-
-
-
-
-
-
   
 </main>
 
@@ -213,7 +192,6 @@
 
 function test(){
       var input = document.getElementById("searchbar").value;
-      console.log("hi");
       document.getElementsByName("descriptor").forEach(details=>{
         var found = false;
         details.childNodes.forEach(detail=>{            
