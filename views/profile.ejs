@@ -8,7 +8,83 @@
         <link href="/css/profile.css" rel="stylesheet">
     </head>
     <body>
+        <link href="/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+        background-color: rgba(51, 32, 221, 1);
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        background-color: rgba(51, 32, 221, 1);
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+  <body>
+    
+<nav class="navbar navbar-expand-md navbar-dark bg-primary mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Red icon</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse" >
+      <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/home">Home </a>
+        </li>
+        <li class="nav-item">
+           <a class="nav-link" aria-current="page" href="#">| </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Profile </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">| </a>
+         </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/login">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<main class="container" >
+    <div class="bg-light p-5 rounded">
         <div name="back">
             <form action="/home" method="post">
                 <button class="btn btn-outline-primary" name="back" >Back</button>
@@ -56,15 +132,11 @@
                         
                     <div class="float-child-right">
                         <div class="blue">About me:</div>
-                    </div>
-                        
+                    </div>   
                 </div>
-
-            </div>
-                    
-            
+            </div>    
         </div>            
-
-
+    </div>
+</main>
     </body>
 </html>

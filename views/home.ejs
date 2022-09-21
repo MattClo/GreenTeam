@@ -8,24 +8,7 @@
     <meta name="generator" content="Hugo 0.101.0">
     <title>Home page</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/navbar-static/">
-
-    
-
-    
-
 <link href="/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
-    <!-- Favicons -->
-<link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
-<link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
-<meta name="theme-color" content="#712cf9">
-
-
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -82,21 +65,24 @@
     <div class="collapse navbar-collapse" id="navbarCollapse" >
       <ul class="navbar-nav ms-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home  | </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/profile">Profile  |</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/login">Logout</a>
-        </li>
+            <a class="nav-link active" aria-current="page" href="#">Home </a>
+          </li>
+          <li class="nav-item">
+             <a class="nav-link" aria-current="page" href="#">| </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/profile">Profile </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">| </a>
+           </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/login">Logout</a>
+          </li>
       </ul>
     </div>
   </div>
 </nav>
-
-
-
 
 
 <main class="container" >
@@ -114,9 +100,6 @@
         <div style="background-color:white;height:auto">  <span id="name"><%=person.forename%></span>   <span><%=person.location%></span><input type="submit" value="View Profile" style="float:right; height:auto;margin-top:auto"> </div>
         <div><br></div>
     <% }); %>
-
-
-
 
   </div>
 </main>
