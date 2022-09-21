@@ -3,30 +3,21 @@ const sqlite = require("sqlite");
 const express = require("express");
 
 const DB_NAME = "people.db"
+const db = createDBConnection()
 
 function createTables() {
-    const tables_sql = [`
-    CREATE TABLE users (
-        username TEXT,
-        password TEXT,
-        fname TEXT,
-        lname TEXT,
-        location TEXT,
-        role TEXT,
-        biography TEXT
-    )`,
-    `CREATE TABLE admin (
-        username TEXT,
-        password TEXT 
-    )`,
-    `CREATE TABLE tags (
-        username TEXT,
-        interest TEXT,
-        FOREIGN KEY (username)
-        REFERENCES users (username);
-    )`];
+    const tables_sql = [
+    "CREATE TABLE users(username TEXT, password TEXT, fname TEXT, lname TEXT, location TEXT, role TEXT, biography TEXT)",
+    "CREATE TABLE admin(username TEXT, password TEXT)",
+    "CREATE TABLE tags(username TEXT, interest TEXT)"
+    ];
 
-    execDB(tables_sql)
+    db.open()
+    for(s of tables_sql) {
+        db.exec(s)
+    }
+    db.close()
+
     console.log("created tables")
 }
 
@@ -113,15 +104,19 @@ function createDBConnection() {
 }
 
 function printTables() {
-    //console.log(new sqlite3.Database(DB_NAME, {verbose: true}).tables)
-    return null
+    const db = createDBConnection()
+    db.serialize(function () {
+        db.all("select name from sqlite_master where type='table'", function (err, tables) {
+            console.log(tables);
+        });
+    });
 }
 
 test_user = new User("john", "small", "John", "Smith", "London", "Dev", "I have worked for a while")
 
 dropDB()
 createTables()
-printTables()/*
-addUser(test_user)
-console.log(queryAllUsers())
-*/
+//printTables()
+//addUser(test_user)
+//console.log(queryAllUsers())
+
