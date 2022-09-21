@@ -5,14 +5,7 @@ const express = require("express");
 const DB_NAME = "people.db"
 
 function createTables() {
-    const db = createDBConnection()
-    console.log("created db")
-    const tables_sql = `
-    CREATE TABLE admin (
-        username TEXT,
-        password TEXT 
-    );
-
+    const tables_sql = [`
     CREATE TABLE users (
         username TEXT,
         password TEXT,
@@ -21,18 +14,19 @@ function createTables() {
         location TEXT,
         role TEXT,
         biography TEXT
-    );
-
-    CREATE TABLE tags (
+    )`,
+    `CREATE TABLE admin (
+        username TEXT,
+        password TEXT 
+    )`,
+    `CREATE TABLE tags (
         username TEXT,
         interest TEXT,
         FOREIGN KEY (username)
         REFERENCES users (username);
-    );
-    `;
+    )`];
 
-    db.run(tables_sql)
-    db.close()
+    execDB(tables_sql)
     console.log("created tables")
 }
 
@@ -56,7 +50,10 @@ function queryAllUsers() {
 }
 
 class Admin {
-    
+    constructor(uname, pwd) {
+        this.uname = uname
+        this.pwd = pwd
+    }
 }
 
 class User {
@@ -76,14 +73,28 @@ class User {
     }
 }
 
+function addMin(admin) {
+    const sql = `
+    INSERT INTO admin
+    VALUES (${admin.uname}, ${admin.pwd})
+    `
+    execDB(sql)
+}
+
 function addUser(user) {
     const sql = `
     INSERT INTO users
     VALUES (${user.uname}, ${user.pwd}, ${user.fname}, ${user.lname},
         ${user.location}, ${user.role}, ${user.biography})
     `
+    execDB(sql)
+}
+
+function execDB(sql) {
     const db = createDBConnection()
-    db.run(sql)
+    db.serialize(function () {
+        db.run(sql)
+    })
     db.close()
 }
 
@@ -101,10 +112,16 @@ function createDBConnection() {
     return new sqlite3.Database(DB_NAME, {verbose: true})
 }
 
+function printTables() {
+    //console.log(new sqlite3.Database(DB_NAME, {verbose: true}).tables)
+    return null
+}
+
 test_user = new User("john", "small", "John", "Smith", "London", "Dev", "I have worked for a while")
 
 dropDB()
 createTables()
+printTables()/*
 addUser(test_user)
 console.log(queryAllUsers())
-
+*/
