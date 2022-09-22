@@ -109,6 +109,7 @@ function addUser(user) {
 function runSQL(sql, params) {
     const db = createDBConnection()
     db.run(sql, params)
+    console.log(`run query\n${sql}`)
     db.close()
 }
 
@@ -125,6 +126,7 @@ function getSQL(sql, params) {
         }
     })
     db.close()
+    console.log(`run query\n${sql}`)
     // because the query must conclude before close, this acts as a mutex
     return x
 }
@@ -136,8 +138,7 @@ function createDBConnection() {
 test_user = new User("john", "small", "John", "Smith", "London", "Dev", "I have worked for a while", "", 20, [])
 
 //dropDB()
-//createTables()
+createTables()
 //printTables()
 addUser(test_user)
-console.log(queryAllUsers())
-
+console.log(getSQL("SELECT * FROM users"), null)
