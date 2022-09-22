@@ -13,9 +13,9 @@ function dropDB() {
 
 function createTables() {
     const tables_sql = [
-    "CREATE TABLE users(username TEXT, password TEXT, fname TEXT, lname TEXT, location TEXT, role TEXT, biography TEXT);",
+    "CREATE TABLE users(username TEXT, password TEXT, fname TEXT, lname TEXT, location TEXT, role TEXT, biography TEXT, imagepath TEXT);",
     "CREATE TABLE admin(username TEXT, password TEXT);",
-    "CREATE TABLE tags(username TEXT, interest TEXT);"
+    "CREATE TABLE tags(uid INT, interest TEXT);"
     ];
 
     const db = createDBConnection()
@@ -40,7 +40,8 @@ function printTables() {
 
 function queryAllUsers() {
     const q = "SELECT * FROM users"
-    getSQL(q, [])
+    const rows = getSQL(q, [])
+
 }
 
 class Admin {
@@ -51,15 +52,21 @@ class Admin {
 }
 
 class User {
+    uid
+
     constructor(uname, pwd, fname, lname,
-        location, role, bio) {
-            this.uname = uname
+        location, role, bio, imagepath, age, interests) {
+            this.username = uname
             this.pwd = pwd
-            this.fname = fname
-            this.lname = lname
+            this.forename = fname
+            this.surname = lname
             this.location = location
             this.role = role
             this.bio = bio
+            this.imagepath = imagepath
+            this.age = age
+            this.interests = interests
+            // needs age, interests
     }
 
     fullname() {
@@ -67,15 +74,33 @@ class User {
     }
 }
 
-function addMin(admin) {
+function addAdmin(admin) {
     throw "not implemented"
 }
 
 function addUser(user) {
-    const q = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?)"
-    const x = runSQL(q, [user.uname, user.pwd, user.fname, user.lname, 
-        user.location, user.role, user.bio])
-    return x
+    // 3 stages
+    // 1. add the user
+    // 2. find the pk (int id by default in sqlite)
+    // 3. add all interests
+
+    // stage 1
+    const q1 = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+    runSQL(q1, [user.uname, user.pwd, user.fname, user.lname, 
+        user.location, user.role, user.bio, user.imagepath, user.age])
+
+    // stage 2
+    const q2 = "SELECT id FROM users WHERE users.username = ?"
+    uid = getSQL(q2, [user.username])
+
+
+    // stage 3
+    const xs = user.interests
+    
+    for(x of xs) {
+        const interest_query = "INSERT INTO tags VALUES(?, ?)"
+        runSQL(interest_query, [x])
+    }
 }
 
 function runSQL(sql, params) {
