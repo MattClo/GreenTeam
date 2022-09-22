@@ -1,7 +1,6 @@
 const sqlite3 = require("sqlite3").verbose();
 const sqlite = require("sqlite");
 const express = require("express");
-const { isFloat32Array } = require("util/types");
 
 const IN_MEM = ":memory:"
 const DB_NAME = "people.db"
@@ -13,9 +12,9 @@ function dropDB() {
 
 function createTables() {
     const tables_sql = [
-    "CREATE TABLE users(username TEXT, password TEXT, fname TEXT, lname TEXT, location TEXT, role TEXT, biography TEXT, imagepath TEXT);",
-    "CREATE TABLE admin(username TEXT, password TEXT);",
-    "CREATE TABLE tags(uid INT, interest TEXT);"
+        "CREATE TABLE users(username TEXT, password TEXT, fname TEXT, lname TEXT, location TEXT, role TEXT, biography TEXT, imagepath TEXT);",
+        "CREATE TABLE admin(username TEXT, password TEXT);",
+        "CREATE TABLE tags(uid INT, interest TEXT);"
     ];
 
     const db = createDBConnection()
@@ -42,6 +41,10 @@ function queryAllUsers() {
     const q = "SELECT * FROM users"
     const rows = getSQL(q, [])
 
+    console.log("query users")
+    console.log(rows)
+
+    throw "queryAllUsers not implemented"
 }
 
 class Admin {
@@ -66,7 +69,6 @@ class User {
             this.imagepath = imagepath
             this.age = age
             this.interests = interests
-            // needs age, interests
     }
 
     fullname() {
@@ -93,13 +95,14 @@ function addUser(user) {
     const q2 = "SELECT id FROM users WHERE users.username = ?"
     uid = getSQL(q2, [user.username])
 
-
     // stage 3
     const xs = user.interests
     
-    for(x of xs) {
-        const interest_query = "INSERT INTO tags VALUES(?, ?)"
-        runSQL(interest_query, [x])
+    if(null !== xs) {
+        for(x of xs) {
+            const interest_query = "INSERT INTO tags VALUES(?, ?)"
+            runSQL(interest_query, [x])
+        }
     }
 }
 
@@ -130,7 +133,7 @@ function createDBConnection() {
     return new sqlite3.Database(DB_NAME)
 }
 
-test_user = new User("john", "small", "John", "Smith", "London", "Dev", "I have worked for a while")
+test_user = new User("john", "small", "John", "Smith", "London", "Dev", "I have worked for a while", "", 20, [])
 
 //dropDB()
 //createTables()
