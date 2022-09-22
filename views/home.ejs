@@ -138,11 +138,12 @@
 </nav>
 
 
+
 <main class="container" >
   <div class="bg-light p-5 rounded">
     <h1 id="hello">Welcome, <%if(user){%><%=user%><%}%></h1>
     <p class="lead">Other people's profiles</p>
-    <form class="d-flex" role="search">
+    <form class="d-flex" role="search" onsubmit="test();return false">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
         <button class="btn btn-outline-success" type="button" onclick="test()">Search</button>
     </form>
