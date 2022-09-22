@@ -21,3 +21,5 @@ node app.js
 A message indicating the port the server is listening on should then appear in the console.
 
 To end the server, simply input `CTRL C`.
+
+Further documentation can be found in the [wiki](https://github.com/MattClo/GreenTeam/wiki)
