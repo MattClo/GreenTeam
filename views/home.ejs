@@ -142,7 +142,7 @@
 <main class="container" >
   <div class="bg-light p-5 rounded">
     <h1 id="hello">Welcome, <%if(user){%><%=user%><%}%></h1>
-    <p class="lead">Other people's profiles</p>
+    <p class="lead">New Starters 2022</p>
     <form class="d-flex" role="search" onsubmit="search();return false">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar" onchange="search()">
         <button class="btn btn-outline-success" type="button" onclick="search()">Search</button>
@@ -156,6 +156,7 @@
       <div name = "big div" id="<%=person.username%>">
         <form method="post" action="/profile" style="background-color:white;height:auto" name="descriptor">  
           <input type="hidden" name="username" value="<%=person.username%>">
+          <img class="mb-3 mt-3 ml-2" src="img\person-circle.svg" alt="profile img" width="68" height="50">
           <span><b><%=person.forename%></b></span>  <span style="font-size:80%"><%=person.location%></span>
           <span style="display:none"><%=person.surname%></span><span style="display:none"><%=person.age%></span><span style="display:none"><%=person.interests%></span> 
           <input type="submit" value="View" class="rounded" style="border:1px; color:white; background-color:rgb(29, 127, 255);float:right; height:auto;margin-top:auto"> 
