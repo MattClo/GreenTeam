@@ -37,9 +37,14 @@ function printTables() {
     });
 }
 
+function userifier(row) {
+    return new User(row['username'], row['password'], row['fname'], row['lname'],
+    row['location'], row['role'], row['biography'], row['imagepath'], row['age'], null)
+}
+
 function queryAllUsers() {
     const q = "SELECT * FROM users;"
-    const rows = getSQL(q, [])
+    const rows = getSQL(q, [], userifier)
 
     return rows
 }
@@ -52,7 +57,6 @@ class Admin {
 }
 
 class User {
-    uid
 
     constructor(uname, pwd, fname, lname,
         location, role, bio, imagepath, age, interests) {
@@ -85,12 +89,13 @@ function addUser(user) {
 
     // stage 1
     const q1 = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    runSQL(q1, [user.uname, user.pwd, user.fname, user.lname, 
-        user.location, user.role, user.bio, user.imagepath, user.age])
+    const params = [user.uname, user.pwd, user.fname, user.lname, 
+        user.location, user.role, user.bio, user.imagepath, user.age]
+    runSQL(q1, params)
 
     // stage 2
     /*const q2 = "SELECT id FROM users WHERE users.username = ?"
-    uid = getSQL(q2, [user.username])*/ // if int uid given, this retrieves that ID
+    uid = getSQL(q2, [user.username], userifier)*/ // if int uid given, this retrieves that ID
 
     // stage 3
     const xs = user.interests
@@ -109,23 +114,24 @@ function runSQL(sql, params) {
     db.close()
 }
 
-function getSQL(sql, params) {
+function getSQL(sql, params, fact) {
     const db = createDBConnection()
-    let x;
+    var results = []
     
-    db.all(sql, params, (err, rows) => {
+    db.each(sql, params, (err, row) => {
         if(err) {
             console.log(err)
-            x = null;
         } else {
-            console.log("Success")
-            x = rows;
+            //console.log("Success")
+            const x = fact(row)
+            results.push(x)
         }
     })
     db.close()
-    console.log(x)
+    console.log("showing results")
+    console.log(results)
     // because the query must conclude before close, this acts as a mutex
-    return x
+    return results
 }
 
 function createDBConnection() {
