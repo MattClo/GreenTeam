@@ -5,14 +5,10 @@ const express = require("express");
 const IN_MEM = ":memory:"
 const DB_NAME = "people.db"
 const db = new sqlite3.Database(IN_MEM, sqlite3.OPEN_READWRITE, (err) => {
-    if (err && err.code == "SQLITE_CANTOPEN") {
-        createDatabase();
-        return;
-        } else if (err) {
-            console.log("Getting error " + err);
-            exit(1);
+    if (err) {
+        console.log("Getting error " + err);
+        exit(1);
     }
-    runQueries(db);
 });
 
 function dropDB() {
@@ -22,9 +18,9 @@ function dropDB() {
 
 function createTables() {
     const tables_sql = [
-    "CREATE TABLE users(username TEXT, password TEXT, fname TEXT, lname TEXT, location TEXT, role TEXT, biography TEXT)",
-    "CREATE TABLE admin(username TEXT, password TEXT)",
-    "CREATE TABLE tags(username TEXT, interest TEXT)"
+    "CREATE TABLE users(username TEXT, password TEXT, fname TEXT, lname TEXT, location TEXT, role TEXT, biography TEXT);",
+    "CREATE TABLE admin(username TEXT, password TEXT);",
+    "CREATE TABLE tags(username TEXT, interest TEXT);"
     ];
 
     db.serialize(function () {
