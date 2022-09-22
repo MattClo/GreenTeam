@@ -16,10 +16,14 @@ To run this webserver, you will require `node.js` and `npm`. Navigate to the sou
 
 To run the server, run
 ```
+node database-access.js
 node app.js
 ```
+
 A message indicating the port the server is listening on should then appear in the console.
 
 To end the server, simply input `CTRL C`.
 
-Further documentation can be found in the [wiki](https://github.com/MattClo/GreenTeam/wiki)
+The first command sets up the database, and the second command starts the webserver.
+
+Further documentation can be found in the [wiki](https://github.com/MattClo/GreenTeam/wiki).
