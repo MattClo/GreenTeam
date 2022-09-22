@@ -2,9 +2,12 @@ module.exports = async (app) =>{
     
     const sqlite3 = require('sqlite3').verbose();
     let db = new sqlite3.Database('people.db');
-    let sql = `select * from users`;
+    let sql1 = `select * from users`;
+    let sql2 = `select * from tags`;
     let people;
-    await(db.all(sql,[],(err, rows)=>{if(err)throw err; people=rows;}));
+    await(db.all(sql1,[],(err, rows)=>{if(err)throw err; people=rows;}));
+    let interests;
+    await(db.all(sql2,[],(err, rows)=>{if(err)throw err; interests=rows;}));
     db.close();
 
     app.get('/home',(req,res)=>{
@@ -12,7 +15,7 @@ module.exports = async (app) =>{
             res.redirect('/login');
         }
         else{
-            res.render('home',{people: people, user:req.session.user, name:req.session.name});
+            res.render('home',{people: people, interests: interests, user:req.session.user, name:req.session.name});
         }
     });
 
