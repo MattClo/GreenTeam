@@ -48,6 +48,56 @@
         -webkit-overflow-scrolling: touch;
         background-color: rgba(51, 32, 221, 1);
       }
+
+
+
+
+
+
+
+
+
+
+
+
+      /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
     </style>
 
     
@@ -70,9 +120,12 @@
           <li class="nav-item">
              <a class="nav-link" aria-current="page" href="#">| </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/profile">Profile </a>
-          </li>
+          <form action="/profile" method="post">
+            <input type="hidden" name="username" value="<%=user%>">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" onclick="this.parentNode.parentNode.submit()" href="#">Profile </a>
+            </li>
+          </form>
           <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#">| </a>
            </li>
@@ -85,23 +138,46 @@
 </nav>
 
 
+
 <main class="container" >
   <div class="bg-light p-5 rounded">
     <h1 id="hello">Welcome, <%if(user){%><%=user%><%}%></h1>
     <p class="lead">Other people's profiles</p>
-    <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar" onchange="test()">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+    <form class="d-flex" role="search" onsubmit="search();return false">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+        <button class="btn btn-outline-success" type="button" onclick="search()">Search</button>
     </form>
     <br>
 
 
     <% people.forEach(function(person){ %>
-        <div style="background-color:white;height:auto">  <span id="name"><%=person.forename%></span>   <span><%=person.location%></span><input type="submit" value="View Profile" style="float:right; height:auto;margin-top:auto"> </div>
+      <div name = "big div">
+        <form method="post" action="/profile" style="background-color:white;height:auto" name="descriptor">  
+          <input type="hidden" name="username" value="<%=person.username%>">
+          <span><%=person.forename%></span>   
+          <span><%=person.location%></span>
+          <input type="submit" value="View" class="rounded" style="border:1px; color:white; background-color:rgb(29, 127, 255);float:right; height:auto;margin-top:auto"> 
+        </form>
         <div><br></div>
+      </div>
     <% }); %>
-
   </div>
+
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h1 id="modalName"></h1>
+      <p id="modalAge"></p>
+      <p id="modalLocation"></p>
+      <p id="modalInterests"></p>
+
+
+      <input type="submit" value="Message">
+    </div>
+  
+  </div>
+  
 </main>
 
 
@@ -111,17 +187,47 @@
   </body>
 </html>
 <script>
-    function test(){
-        
-        document.getElementsByName("name").forEach(test=>{
-            test.innerHTML="awawa";
+
+
+
+
+function search(){
+      var input = document.getElementById("searchbar").value;
+      document.getElementsByName("descriptor").forEach(details=>{
+        var found = false;
+        details.childNodes.forEach(detail=>{            
+          if(String(detail.innerHTML).toLowerCase().includes(input.toLowerCase())){
+            found=true;
+          }
+        });
+        if(found){
+          details.parentNode.hidden = false;
         }
-
-        )
-        document.getElementById("hello").innerHTML="you typed"+document.getElementById("searchbar").value;
-
-
+        else{
+          details.parentNode.hidden = true;
+        }
+      });
+    }
+    
+    function viewPerson(forename,surname,age,location,interests){
+      document.getElementById("myModal").style.display = "block";
+      document.getElementById("modalName").innerHTML=forename+" "+surname;
+      document.getElementById("modalAge").innerHTML="Age: "+age;
+      document.getElementById("modalLocation").innerHTML="Location: "+location;
+      document.getElementById("modalInterests").innerHTML="Interests: "+interests;
     }
 
-    </script>
 
+  document.getElementsByClassName("close")[0].onclick = function() {
+    document.getElementById("myModal").style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == document.getElementById("myModal")) {
+      document.getElementById("myModal").style.display = "none";
+      }
+  }
+        //document.getElementById("hello").innerHTML="you typed"+document.getElementById("searchbar").value;
+
+
+    </script>
