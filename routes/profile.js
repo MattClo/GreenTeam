@@ -3,12 +3,13 @@ module.exports = async (app) =>{
     let profileuser;
     const sqlite3 = require('sqlite3').verbose();
     let db = new sqlite3.Database('people.db');
-    let sql = `select * from users`;
+    let sql1 = `select * from users`;
+    let sql2 = `select * from tags`;
     let people;
-    db.all(sql,[],(err, rows)=>{if(err)throw err; people=rows;});
+    await(db.all(sql1,[],(err, rows)=>{if(err)throw err; people=rows;}));
     let interests;
-    await(db.all(sql2,[],(err, rows)=>{if(err)throw err; interests=rows;}));
-    db.close();
+    db.all(sql2,[],(err, rows)=>{if(err)throw err; interests=rows;});
+
 
     app.get('/profile', (req,res)=>{
         if (req.session.user==null){
@@ -21,8 +22,7 @@ module.exports = async (app) =>{
                     profileuser=person;
                 }
             });
-
-            res.render('profile',{puser:profileuser,message:false});
+            res.render('profile',{puser:profileuser,interests:interests,message:false});
         }
     });
 
@@ -38,7 +38,7 @@ module.exports = async (app) =>{
             });
             let message = true
             if(req.session.user == profileuser.username){message=false;}
-            res.render('profile',{puser:profileuser,message:message});
+            res.render('profile',{puser:profileuser,interests:interests,message:message});
         }
     })
 }
