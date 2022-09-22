@@ -12,24 +12,24 @@ function dropDB() {
 
 function createTables() {
     const tables_sql = [
-        "CREATE TABLE users(username TEXT, password TEXT, fname TEXT, lname TEXT, location TEXT, role TEXT, biography TEXT, imagepath TEXT);",
+        "CREATE TABLE users(username TEXT, password TEXT, fname TEXT, lname TEXT, location TEXT, role TEXT, biography TEXT, imagepath TEXT, age NUMBER);",
         "CREATE TABLE admin(username TEXT, password TEXT);",
-        "CREATE TABLE tags(uid INT, interest TEXT);"
+        "CREATE TABLE tags(username INT, interest TEXT);"
     ];
 
     const db = createDBConnection()
 
     db.serialize(function () {
         for(s of tables_sql) {
-            db.run(s)
+            db.exec(s)
         }
     })
 
-    console.log("created tables")
     db.close()
 }
 
 function printTables() {
+    const db = createDBConnection()
     db.serialize(function () {
         db.each("select name from sqlite_master where type='table'", function (err, table) {
             console.log(table);
@@ -38,13 +38,10 @@ function printTables() {
 }
 
 function queryAllUsers() {
-    const q = "SELECT * FROM users"
+    const q = "SELECT * FROM users;"
     const rows = getSQL(q, [])
 
-    console.log("query users")
-    console.log(rows)
-
-    throw "queryAllUsers not implemented"
+    return rows
 }
 
 class Admin {
@@ -83,17 +80,17 @@ function addAdmin(admin) {
 function addUser(user) {
     // 3 stages
     // 1. add the user
-    // 2. find the pk (int id by default in sqlite)
+    // 2. find the pk (username at the moment)
     // 3. add all interests
 
     // stage 1
-    const q1 = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+    const q1 = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
     runSQL(q1, [user.uname, user.pwd, user.fname, user.lname, 
         user.location, user.role, user.bio, user.imagepath, user.age])
 
     // stage 2
-    const q2 = "SELECT id FROM users WHERE users.username = ?"
-    uid = getSQL(q2, [user.username])
+    /*const q2 = "SELECT id FROM users WHERE users.username = ?"
+    uid = getSQL(q2, [user.username])*/ // if int uid given, this retrieves that ID
 
     // stage 3
     const xs = user.interests
@@ -101,7 +98,7 @@ function addUser(user) {
     if(null !== xs) {
         for(x of xs) {
             const interest_query = "INSERT INTO tags VALUES(?, ?)"
-            runSQL(interest_query, [x])
+            runSQL(interest_query, [user.uname, x])
         }
     }
 }
@@ -109,7 +106,6 @@ function addUser(user) {
 function runSQL(sql, params) {
     const db = createDBConnection()
     db.run(sql, params)
-    console.log(`run query\n${sql}`)
     db.close()
 }
 
@@ -122,11 +118,12 @@ function getSQL(sql, params) {
             console.log(err)
             x = null;
         } else {
+            console.log("Success")
             x = rows;
         }
     })
     db.close()
-    console.log(`run query\n${sql}`)
+    console.log(x)
     // because the query must conclude before close, this acts as a mutex
     return x
 }
@@ -137,8 +134,9 @@ function createDBConnection() {
 
 test_user = new User("john", "small", "John", "Smith", "London", "Dev", "I have worked for a while", "", 20, [])
 
+
 //dropDB()
-createTables()
+//createTables()
 //printTables()
 addUser(test_user)
-console.log(getSQL("SELECT * FROM users"), null)
+console.log(queryAllUsers())
