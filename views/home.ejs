@@ -144,18 +144,20 @@
     <h1 id="hello">Welcome, <%if(user){%><%=user%><%}%></h1>
     <p class="lead">Other people's profiles</p>
     <form class="d-flex" role="search" onsubmit="search();return false">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar" onchange="search()">
         <button class="btn btn-outline-success" type="button" onclick="search()">Search</button>
     </form>
     <br>
 
+  
+    
 
     <% people.forEach(function(person){ %>
-      <div name = "big div">
+      <div name = "big div" id="<%=person.username%>">
         <form method="post" action="/profile" style="background-color:white;height:auto" name="descriptor">  
           <input type="hidden" name="username" value="<%=person.username%>">
-          <span><%=person.forename%></span>   
-          <span><%=person.location%></span>
+          <span><b><%=person.forename%></b></span>  <span style="font-size:80%"><%=person.location%></span>
+          <span style="display:none"><%=person.surname%></span><span style="display:none"><%=person.age%></span><span style="display:none"><%=person.interests%></span> 
           <input type="submit" value="View" class="rounded" style="border:1px; color:white; background-color:rgb(29, 127, 255);float:right; height:auto;margin-top:auto"> 
         </form>
         <div><br></div>
@@ -191,31 +193,31 @@
 
 
 
-function search(){
-      var input = document.getElementById("searchbar").value;
-      document.getElementsByName("descriptor").forEach(details=>{
-        var found = false;
-        details.childNodes.forEach(detail=>{            
-          if(String(detail.innerHTML).toLowerCase().includes(input.toLowerCase())){
-            found=true;
-          }
-        });
-        if(found){
-          details.parentNode.hidden = false;
-        }
-        else{
-          details.parentNode.hidden = true;
-        }
-      });
+function search(people){
+  var input = document.getElementById("searchbar").value;
+  document.getElementsByName("descriptor").forEach(details=>{
+    var found = false;
+    details.childNodes.forEach(detail=>{            
+      if(String(detail.innerHTML).toLowerCase().includes(input.toLowerCase())){
+        found=true;
+      }
+    });
+    if(found){
+      details.parentNode.hidden = false;
     }
-    
-    function viewPerson(forename,surname,age,location,interests){
-      document.getElementById("myModal").style.display = "block";
-      document.getElementById("modalName").innerHTML=forename+" "+surname;
-      document.getElementById("modalAge").innerHTML="Age: "+age;
-      document.getElementById("modalLocation").innerHTML="Location: "+location;
-      document.getElementById("modalInterests").innerHTML="Interests: "+interests;
+    else{
+      details.parentNode.hidden = true;
     }
+  });
+}
+
+function viewPerson(forename,surname,age,location,interests){
+  document.getElementById("myModal").style.display = "block";
+  document.getElementById("modalName").innerHTML=forename+" "+surname;
+  document.getElementById("modalAge").innerHTML="Age: "+age;
+  document.getElementById("modalLocation").innerHTML="Location: "+location;
+  document.getElementById("modalInterests").innerHTML="Interests: "+interests;
+}
 
 
   document.getElementsByClassName("close")[0].onclick = function() {
@@ -227,7 +229,18 @@ function search(){
       document.getElementById("myModal").style.display = "none";
       }
   }
-        //document.getElementById("hello").innerHTML="you typed"+document.getElementById("searchbar").value;
+     
+  
+  searchbar.addEventListener('keydown', function(e) {
+    
+    setTimeout(()=>{search();},2);
+  });
+
+//filter with keypress - without enter
+//filter function - on "chan" array
+  
+  
+//document.getElementById("hello").innerHTML="you typed"+document.getElementById("searchbar").value;
 
 
     </script>
