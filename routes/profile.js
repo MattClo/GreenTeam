@@ -15,6 +15,7 @@ module.exports = async (app) =>{
         else{
             let profileuser;
             people.forEach((person)=>{
+                console.log(person.username);
                 if(person.username==req.session.user){
                     profileuser=person;
                 }
