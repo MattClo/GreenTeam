@@ -143,8 +143,8 @@
     <h1 id="hello">Welcome, <%if(user){%><%=user%><%}%></h1>
     <p class="lead">Other people's profiles</p>
     <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar" onchange="test()">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+        <button class="btn btn-outline-success" type="button" onclick="test()">Search</button>
     </form>
     <br>
 
@@ -152,7 +152,7 @@
     <% people.forEach(function(person){ %>
       <div name = "big div">
         <form method="post" action="/profile" style="background-color:white;height:auto" name="descriptor">  
-          <input name="username" value="<%=person.username%>">
+          <input type="hidden" name="username" value="<%=person.username%>">
           <span><%=person.forename%></span>   
           <span><%=person.location%></span>
           <input type="submit" value="View" class="rounded" style="border:1px; color:white; background-color:rgb(29, 127, 255);float:right; height:auto;margin-top:auto"> 
