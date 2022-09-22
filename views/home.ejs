@@ -48,18 +48,6 @@
         -webkit-overflow-scrolling: touch;
         background-color: rgba(51, 32, 221, 1);
       }
-
-
-
-
-
-
-
-
-
-
-
-
       /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -98,17 +86,22 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.btn:hover,.btn:focus, .btn:active, .btn-primary.active{
+      background-color:rgb(29, 127, 255) !important;
+      color:white!important;
+      transition: 0.7s !important;
+  }
     </style>
 
     
     <!-- Custom styles for this template -->
     <link href="navbar-top.css" rel="stylesheet">
   </head>
-  <body>
-    
+  <body> 
 <nav class="navbar navbar-expand-md navbar-dark bg-primary mb-4">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Red icon</a>
+    <img src="img\logo-white_text_log.svg" style="margin-left:15px" alt="logo" width="15%" height="15%">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -137,27 +130,27 @@
   </div>
 </nav>
 
-
-
 <main class="container" >
   <div class="bg-light p-5 rounded">
-    <h1 id="hello">Welcome, <%if(user){%><%=user%><%}%></h1>
-    <p class="lead">New Starters 2022</p>
-    <form class="d-flex" role="search" onsubmit="search();return false">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
-        <button class="btn btn-outline-success" type="button" onclick="search()">Search</button>
+    <h2 id="hello" style="text-align:center">Welcome, <%if(name){%><%=name%><%}%></h2><br><br>
+    <form class="d-flex" style="margin-left:30%; margin-right:30%" role="search" onsubmit="search();return false">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar" onchange="search()">
+        <button class="btn btn-outline-success" style="color:white;background-color:rgb(29, 127, 255)"type="button" onclick="search()">Search</button>
     </form>
-    <br>
+    <br><br><p class="lead">New Starters | 09/2022</p>
+    
 
+  
+    
 
     <% people.forEach(function(person){ %>
-      <div name = "big div">
+      <div name = "big div" id="<%=person.username%>">
         <form method="post" action="/profile" style="background-color:white;height:auto" name="descriptor">  
           <input type="hidden" name="username" value="<%=person.username%>">
           <img class="mb-3 mt-3 ml-2" src="img\person-circle.svg" alt="profile img" width="68" height="50">
-          <span><%=person.forename%></span>
-          <span><%=person.location%></span>
-          <input type="submit" value="View" class="rounded mt-4" style="border:1px; color:white; background-color:rgb(29, 127, 255);float:right;margin-right: 16px; height:auto;"> 
+          <span><b><%=person.forename%></b></span>  <span style="font-size:80%"><%=person.location%></span>
+          <span style="display:none"><%=person.surname%></span><span style="display:none"><%=person.age%></span><span style="display:none"><%=person.interests%></span> 
+          <input type="submit" value="View Profile" class="btn rounded mt-4 btn-outline-primary " style="border-color:rgb(29,127,255); background-color:white; color:rgb(29, 127, 255);float:right; height:auto;margin-top:auto; margin-right: 16px"> 
         </form>
         <div><br></div>
       </div>
@@ -192,31 +185,31 @@
 
 
 
-function search(){
-      var input = document.getElementById("searchbar").value;
-      document.getElementsByName("descriptor").forEach(details=>{
-        var found = false;
-        details.childNodes.forEach(detail=>{            
-          if(String(detail.innerHTML).toLowerCase().includes(input.toLowerCase())){
-            found=true;
-          }
-        });
-        if(found){
-          details.parentNode.hidden = false;
-        }
-        else{
-          details.parentNode.hidden = true;
-        }
-      });
+function search(people){
+  var input = document.getElementById("searchbar").value;
+  document.getElementsByName("descriptor").forEach(details=>{
+    var found = false;
+    details.childNodes.forEach(detail=>{            
+      if(String(detail.innerHTML).toLowerCase().includes(input.toLowerCase())){
+        found=true;
+      }
+    });
+    if(found){
+      details.parentNode.hidden = false;
     }
-    
-    function viewPerson(forename,surname,age,location,interests){
-      document.getElementById("myModal").style.display = "block";
-      document.getElementById("modalName").innerHTML=forename+" "+surname;
-      document.getElementById("modalAge").innerHTML="Age: "+age;
-      document.getElementById("modalLocation").innerHTML="Location: "+location;
-      document.getElementById("modalInterests").innerHTML="Interests: "+interests;
+    else{
+      details.parentNode.hidden = true;
     }
+  });
+}
+
+function viewPerson(forename,surname,age,location,interests){
+  document.getElementById("myModal").style.display = "block";
+  document.getElementById("modalName").innerHTML=forename+" "+surname;
+  document.getElementById("modalAge").innerHTML="Age: "+age;
+  document.getElementById("modalLocation").innerHTML="Location: "+location;
+  document.getElementById("modalInterests").innerHTML="Interests: "+interests;
+}
 
 
   document.getElementsByClassName("close")[0].onclick = function() {
@@ -228,7 +221,18 @@ function search(){
       document.getElementById("myModal").style.display = "none";
       }
   }
-        //document.getElementById("hello").innerHTML="you typed"+document.getElementById("searchbar").value;
+     
+  
+  searchbar.addEventListener('keydown', function(e) {
+    
+    setTimeout(()=>{search();},2);
+  });
+
+//filter with keypress - without enter
+//filter function - on "chan" array
+  
+  
+//document.getElementById("hello").innerHTML="you typed"+document.getElementById("searchbar").value;
 
 
     </script>

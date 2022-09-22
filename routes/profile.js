@@ -5,7 +5,7 @@ module.exports = async (app) =>{
     let db = new sqlite3.Database('people.db');
     let sql = `select * from people`;
     let people;
-    (db.all(sql,[],(err, rows)=>{if(err)throw err; people=rows;}));
+    db.all(sql,[],(err, rows)=>{if(err)throw err; people=rows;});
     db.close();
 
     app.get('/profile', (req,res)=>{
@@ -15,7 +15,6 @@ module.exports = async (app) =>{
         else{
             let profileuser;
             people.forEach((person)=>{
-                console.log(person.username);
                 if(person.username==req.session.user){
                     profileuser=person;
                 }

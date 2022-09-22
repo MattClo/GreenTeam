@@ -12,7 +12,7 @@ app.use('/css', express.static(__dirname+'/css'))
 app.use('/img', express.static(__dirname+'/img'))
 
 
-app.use(session({secret:"hi",saveUninitialized:true,resave:true,user:null}));
+app.use(session({secret:"hi",saveUninitialized:true,resave:true,user:null,name:null}));
 
 //Bodyparser for receiving post variables via json
 var bodyParser = require('body-parser');
