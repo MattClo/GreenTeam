@@ -3,7 +3,7 @@ module.exports = async (app) =>{
     let profileuser;
     const sqlite3 = require('sqlite3').verbose();
     let db = new sqlite3.Database('people.db');
-    let sql = `select * from people`;
+    let sql = `select * from users`;
     let people;
     db.all(sql,[],(err, rows)=>{if(err)throw err; people=rows;});
     db.close();
