@@ -9,6 +9,7 @@ app.set('view engine', 'ejs');
 app.use('/dist/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/dist/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/css', express.static(__dirname+'/css'))
+app.use('/img', express.static(__dirname+'/img'))
 
 
 app.use(session({secret:"hi",saveUninitialized:true,resave:true,user:null}));
