@@ -12,7 +12,7 @@ module.exports = async (app) =>{
             res.redirect('/login');
         }
         else{
-        res.render('home',{people: people, user:req.session.user});
+            res.render('home',{people: people, user:req.session.user, name:req.session.name});
         }
     });
 

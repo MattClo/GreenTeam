@@ -8,24 +8,7 @@
     <meta name="generator" content="Hugo 0.101.0">
     <title>Home page</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/navbar-static/">
-
-    
-
-    
-
 <link href="/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
-    <!-- Favicons -->
-<link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
-<link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
-<meta name="theme-color" content="#712cf9">
-
-
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -65,31 +48,83 @@
         -webkit-overflow-scrolling: touch;
         background-color: rgba(51, 32, 221, 1);
       }
+      /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover,.btn:focus, .btn:active, .btn-primary.active{
+      background-color:rgb(29, 127, 255) !important;
+      color:white!important;
+      transition: 0.7s !important;
+  }
     </style>
 
     
     <!-- Custom styles for this template -->
     <link href="navbar-top.css" rel="stylesheet">
   </head>
-  <body>
-    
+  <body> 
 <nav class="navbar navbar-expand-md navbar-dark bg-primary mb-4">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Red icon</a>
+    <img src="img\logo-white_text_log.svg" style="margin-left:15px" alt="logo" width="15%" height="15%">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse" >
       <ul class="navbar-nav ms-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home  | </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/profile">Profile  |</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/login">Logout</a>
-        </li>
+            <a class="nav-link active" aria-current="page" href="#">Home </a>
+          </li>
+          <li class="nav-item">
+             <a class="nav-link" aria-current="page" href="#">| </a>
+          </li>
+          <form action="/profile" method="post">
+            <input type="hidden" name="username" value="<%=user%>">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" onclick="this.parentNode.parentNode.submit()" href="#">Profile </a>
+            </li>
+          </form>
+          <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">| </a>
+           </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/login">Logout</a>
+          </li>
       </ul>
     </div>
   </div>
@@ -97,14 +132,46 @@
 
 <main class="container" >
   <div class="bg-light p-5 rounded">
-    <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    <h1>New Starters 2022</h1>
-    <p class="lead">Other people's profile</p>
-    <a class="btn btn-lg btn-primary" href="/docs/5.2/components/navbar/" role="button">View navbar docs &raquo;</a>
+    <h2 id="hello" style="text-align:center">Welcome, <%if(name){%><%=name%><%}%></h2><br><br>
+    <form class="d-flex" style="margin-left:30%; margin-right:30%" role="search" onsubmit="search();return false">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar" onchange="search()">
+        <button class="btn btn-outline-success" style="color:white;background-color:rgb(29, 127, 255)"type="button" onclick="search()">Search</button>
+    </form>
+    <br><br><p class="lead">New Starters | 09/2022</p>
+    
+
+  
+    
+
+    <% people.forEach(function(person){ %>
+      <div name = "big div" id="<%=person.username%>">
+        <form method="post" action="/profile" style="background-color:white;height:auto" name="descriptor">  
+          <input type="hidden" name="username" value="<%=person.username%>">
+          <img class="mb-3 mt-3 ml-2" src="img\person-circle.svg" alt="profile img" width="68" height="50">
+          <span><b><%=person.forename%></b></span>  <span style="font-size:80%"><%=person.location%></span>
+          <span style="display:none"><%=person.surname%></span><span style="display:none"><%=person.age%></span><span style="display:none"><%=person.interests%></span> 
+          <input type="submit" value="View Profile" class="btn rounded mt-4 btn-outline-primary " style="border-color:rgb(29,127,255); background-color:white; color:rgb(29, 127, 255);float:right; height:auto;margin-top:auto; margin-right: 16px"> 
+        </form>
+        <div><br></div>
+      </div>
+    <% }); %>
   </div>
+
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h1 id="modalName"></h1>
+      <p id="modalAge"></p>
+      <p id="modalLocation"></p>
+      <p id="modalInterests"></p>
+
+
+      <input type="submit" value="Message">
+    </div>
+  
+  </div>
+  
 </main>
 
 
@@ -113,3 +180,59 @@
       
   </body>
 </html>
+<script>
+
+
+
+
+function search(people){
+  var input = document.getElementById("searchbar").value;
+  document.getElementsByName("descriptor").forEach(details=>{
+    var found = false;
+    details.childNodes.forEach(detail=>{            
+      if(String(detail.innerHTML).toLowerCase().includes(input.toLowerCase())){
+        found=true;
+      }
+    });
+    if(found){
+      details.parentNode.hidden = false;
+    }
+    else{
+      details.parentNode.hidden = true;
+    }
+  });
+}
+
+function viewPerson(forename,surname,age,location,interests){
+  document.getElementById("myModal").style.display = "block";
+  document.getElementById("modalName").innerHTML=forename+" "+surname;
+  document.getElementById("modalAge").innerHTML="Age: "+age;
+  document.getElementById("modalLocation").innerHTML="Location: "+location;
+  document.getElementById("modalInterests").innerHTML="Interests: "+interests;
+}
+
+
+  document.getElementsByClassName("close")[0].onclick = function() {
+    document.getElementById("myModal").style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == document.getElementById("myModal")) {
+      document.getElementById("myModal").style.display = "none";
+      }
+  }
+     
+  
+  searchbar.addEventListener('keydown', function(e) {
+    
+    setTimeout(()=>{search();},2);
+  });
+
+//filter with keypress - without enter
+//filter function - on "chan" array
+  
+  
+//document.getElementById("hello").innerHTML="you typed"+document.getElementById("searchbar").value;
+
+
+    </script>
