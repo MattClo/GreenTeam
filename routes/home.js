@@ -7,8 +7,6 @@ module.exports = async (app) =>{
     let people;
     await(db.all(sql1,[],(err, rows)=>{if(err)throw err; people=rows;}));
     let interests;
-    await(db.all(sql2,[],(err, rows)=>{if(err)throw err; interests=rows;}));
-    db.close();
 
     app.get('/home',(req,res)=>{
         if (req.session.user==null){

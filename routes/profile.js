@@ -6,6 +6,8 @@ module.exports = async (app) =>{
     let sql = `select * from users`;
     let people;
     db.all(sql,[],(err, rows)=>{if(err)throw err; people=rows;});
+    let interests;
+    await(db.all(sql2,[],(err, rows)=>{if(err)throw err; interests=rows;}));
     db.close();
 
     app.get('/profile', (req,res)=>{
@@ -13,7 +15,7 @@ module.exports = async (app) =>{
             res.redirect('/login');
         }
         else{
-            let profileuser;
+            let profileuser; 
             people.forEach((person)=>{
                 if(person.username==req.session.user){
                     profileuser=person;
