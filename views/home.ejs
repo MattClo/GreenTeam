@@ -134,12 +134,12 @@
 
 <main class="container" >
   <div class="bg-light p-5 rounded">
-    <h2 id="hello" style="text-align:center">Welcome, <%if(name){%><%=name%><%}%></h2><br><br>
+    <br><h2 id="hello" style="text-align:center">Welcome, <%if(name){%><%=name%><%}%></h2><br><br>
     <form class="d-flex" style="margin-left:30%; margin-right:30%" role="search" onsubmit="search();return false">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar" onchange="search()">
         <button class="btn btn-outline-success" style="color:white;background-color:rgb(29, 127, 255)"type="button" onclick="search()">Search</button>
     </form>
-    <br><br><p class="lead">New Starters | 09/2022</p>
+    <br><p class="lead mb-4">New Starters | 09/2022</p>
     
 
   
@@ -150,9 +150,9 @@
     <form method="post" action="/profile" style="background-color:white;height:auto" name="descriptor"> 
       
         <input type="hidden" name="username" value="<%=person.username%>">       
-        <input type="submit" value="View Profile" class="btn rounded mt-4 btn-outline-primary " style="border-color:rgb(29,127,255); background-color:white; color:rgb(29, 127, 255);float:right; height:auto;margin-top:auto; margin-right: 16px"> 
+        <input type="submit" value="View Profile" class="btn rounded btn-outline-primary " style="border-color:rgb(29,127,255); background-color:white; color:rgb(29, 127, 255);float:right; height:auto;margin-top:5%; margin-top:32px; margin-right: 32px"> 
       
-        <img class="mb-4 ml-4" src="img\person-circle.svg" alt="profile img" width="68" height="50">
+        <img class="mb-4 ml-6" style="margin-left:1%"src="img\person-circle.svg" alt="profile img" width="68" height="50">
         
         <% interests.forEach(function(interest){%>
           <%if(interest.username==person.username){%>
@@ -161,8 +161,8 @@
         <%});%>
         
 
-        <div style="display:inline-block"><br><span><b><%=person.forename%> <%=person.surname%></b></span><div style="line-height:0px;"><br></div><span style="display:inline-block; font-size:80%"><%=person.location%></span></div>
-        <span style="display:none"><%=person.age%></span><span style="display:none"><%=person.interests%></span> 
+        <div style="display:inline-block"><br><span><b><%=person.forename%> <%=person.surname%></b></span><div style="line-height:0px;"><br></div><span style="display:inline-block; font-size:80%"><%=person.role%></span></div>
+        <span style="display:none"><%=person.age%></span><span style="display:none"><%=person.location%></span> 
             
       
          
@@ -206,22 +206,31 @@
 
 
 function search(people){
-  var input = document.getElementById("searchbar").value;
+  var inputs = document.getElementById("searchbar").value.split(" ");
+  console.log(inputs);
+  var allfound = false;
+  var found = false;
+
   document.getElementsByName("descriptor").forEach(details=>{
-    var found = false;
-    details.childNodes.forEach(detail=>{  
-      console.log(detail.innerHTML);          
-      if(String(detail.innerHTML).toLowerCase().includes(input.toLowerCase())){
-        found=true;
+    allfound=true;
+    inputs.forEach(input=>{  
+      details.childNodes.forEach(detail=>{      
+        if(String(detail.innerHTML).toLowerCase().includes(input.toLowerCase())){
+          found=true;
+        }});
+      if(!found){
+        allfound = false;
       }
+      found=false;
     });
-    if(found){
+    if(allfound){
       details.parentNode.hidden = false;
     }
     else{
       details.parentNode.hidden = true;
     }
   });
+  
 }
 
 function viewPerson(forename,surname,age,location,interests){

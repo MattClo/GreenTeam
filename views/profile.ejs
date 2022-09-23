@@ -87,39 +87,44 @@
     <div class="bg-light p-5 rounded">
         <div name="back">
             <form action="/home" method="post">
-                <button class="btn btn-outline-primary btn-sm mt-0" name="back" >Back</button>
+                <!-- <button class="btn btn-outline-primary btn-sm mt-0" name="back" >Back</button> -->
+                <a href="/home"><button type="button" style="margin-left:-30px;margin-top:-40px; color: black" class="btn btn-link">Back</button></a>
             </form>
         </div>
-        
         <div class="col-lg-12">
-            <img class="rounded-circle mr-4" style="margin-left:450px" width="140" height="140" src="img\person-circle.svg" role="img">
-            <h2 class="fw-normal" style="margin-left:410px; margin-top:20px"><%=puser.forename%> <%=puser.surname%></h2>
-            <p style="margin-left:460px">Location: <%=puser.location%></p>
-            <p style="margin-left:490px">Age: <%=puser.age%></p>
-            <p style="margin-left:500px">Role</p>
-            <p style="margin-left:930px"><a class="btn btn-outline-primary btn-sm mt-0" href="#" fill="#1b7ced"><%if(!message){%>Edit Profile<%}else{%>Message<%}%></a></p>
-            <div>
-                <!--Oi Sharif wag1-->
-                <div>                                 
-                  <a href="#"></a>
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 ">
-                    <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="300" height="250" xmlns="http://www.w3.org/2000/svg"  aria-label="Placeholder:  Interests" preserveAspectRatio="xMidYMid slice"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#ffffff"/>
-                            <text x="25%" y="18%" fill="#000000" dy=".3em" style="font-size:2.1vw" >Interests </text>
-                        </svg>
-                    </div>
-                    
-                    <div class="col p-4 d-flex flex-column position-static">
-                      <h3 class="mb-0">About me:</h3>
-                      <p class="card-text mb-auto">Interests: <%=puser.interests%></p>
-                      
-                    </div>
+            <img class="rounded-circle mr-4" style="display:block;margin-left:auto;margin-right:auto" width="140" height="140" src="img\person-circle.svg" role="img">
+            <h2 class="mb-0" class="fw-normal" style="text-align:center; margin-top:20px;font-family:calibri"><%=puser.forename%> <%=puser.surname%></h2>
+            <p class="mb-3" style="text-align:center"><%=puser.role%></p>
+            <p class="mb-3" style="text-align:center"><a class="btn btn-outline-primary btn-sm mt-0" href="#" fill="#1b7ced"><%if(!message){%>Edit Profile<%}else{%>Say Hello!<%}%></a></p>
+                  <br>             
+            <!--<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 ">-->
+            <div class="row g-0 mb-4">
+
+
+
+              <div id="wrapper" class="row">
+                <div id="left" class="shadow-sm rounded" style="margin-left:1.2%;margin-right:1%;float:left;width:48.4%;height:auto;background-color:white">
+                  <h3 class="" style="margin-top:3%;font-family:calibri;margin-left:5%" >Interests</h3>
+                  <%interests.forEach(interest=>{%>
+                    <%if(interest.username==puser.username){%>
+                      <p class="mb-0" style="font-family:calibri;margin-left:5%">-<%=interest.interest%></p> 
+                    <%}%>
+                  <%});%>
+                  <br>
                 </div>
 
-               
-        </div>            
-    </div>
-</main>
-    </body>
+                <div id="right" class="shadow-sm rounded" style="float:right;margin-left:1%;width:48.4%;height:auto;background-color:white;">
+                  <h3 style="margin-top:3%;font-family:calibri;margin-left:5%">About</h3>
+                  <p class="mb-0" style="font-family:calibri;margin-left:5%">"<%=puser.biography%>"</p>
+                  <p class="mb-0"style="font-family:calibri;margin-left:5%">-<%=puser.age%> years old</p>
+                  <p class="mb-0" style="font-family:calibri;margin-left:5%">-Located in <%=puser.location%></p>
+                </div>
+              </div>
+
+
+            </div>
+
+
+    </main>
+  </body>
 </html>
